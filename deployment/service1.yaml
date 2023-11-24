@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: s1-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: s1
+  template:
+    metadata:
+      labels:
+        app: s1
+    spec:
+      containers:
+        - name: test
+          image: test:test
+          ports:
+          - containerPort: 3010
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: CLIENT_INSTANCE
+              value: google
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: s1-srv
+spec:
+  selector:
+    app: s1
+  ports:
+    - name: s1
+      protocol: TCP
+      port: 3010
+      targetPort: 3010

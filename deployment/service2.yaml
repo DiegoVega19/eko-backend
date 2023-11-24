@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: s2-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: s2
+  template:
+    metadata:
+      labels:
+        app: s2
+    spec:
+      containers:
+        - name: test
+          image: test:test
+          ports:
+          - containerPort: 3020
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: CLIENT_INSTANCE
+              value: mozila
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: s2-srv
+spec:
+  selector:
+    app: s2
+  ports:
+    - name: s2
+      protocol: TCP
+      port: 3020
+      targetPort: 3020

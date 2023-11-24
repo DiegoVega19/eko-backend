@@ -13,13 +13,10 @@ RUN npm install
 # Bundle app source
 COPY . .
 
-
 # Creates a "dist" folder with the production build
 RUN npm run build
 
 RUN npm run copy:assets
-
-ENV CLIENT_INSTANCE google
 
 
 # Start the server using the production build
